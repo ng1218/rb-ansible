@@ -19,7 +19,7 @@
 
 - name: Copy nginx config file
   ansible.builtin.copy:
-    src: /files/nginx.conf
+    src: nginx.conf
     dest: /etc/nginx/nginx.conf
 
 - name: Unzip frontend.zip to html folder
