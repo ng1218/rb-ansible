@@ -1,6 +1,7 @@
 - name: Disable nginx module
-  ansible.builtin.command: dnf module disable nginx -y; dnf module enable nginx:1.24 -y
-
+  ansible.builtin.shell:
+    cmd: dnf module disable nginx -y; dnf module enable nginx:1.24 -y
+    
 - name: Install nginx 1.24 version
   ansible.builtin.dnf:
     name: nginx
