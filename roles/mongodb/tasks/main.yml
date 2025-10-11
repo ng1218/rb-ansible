@@ -1,0 +1,22 @@
+- name: Copy mongo.repo
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.depos.d/mongo.repo
+
+- name: Install mongo DB
+  ansible.builtin.dnf:
+    name: mongodb-org
+    state: present
+
+- name: Update default listening port from 127.0.0.1 to 0.0.0.0
+  ansible.builtin.replace:
+    path: /etc/mongod.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+
+- name: Enable and start nginx service
+  ansible.builtin.systemd_service:
+    name: mongod
+    enabled: true
+    state: started
+    
