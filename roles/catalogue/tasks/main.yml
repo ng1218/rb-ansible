@@ -1,0 +1,36 @@
+- name: Disable nodejs module
+  ansible.builtin.shell:
+    cmd: dnf module disable nodejs -y; dnf module enable nodejs:20 -y
+    
+- name: Install nodejs:20 version
+  ansible.builtin.dnf:
+    name: nodejs
+    state: present
+
+- name: Remove default nginx content
+  ansible.builtin.file:
+    path: /usr/share/nginx/html/*
+    state: absent
+
+- name: Download frontend content
+  ansible.builtin.get_url:
+    url: https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+    dest: /tmp/frontend.zip
+
+- name: Copy nginx config file
+  ansible.builtin.copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+
+- name: Unzip frontend.zip to html folder
+  ansible.builtin.unarchive:
+    src: /tmp/frontend.zip
+    dest: /usr/share/nginx/html
+    remote_src: yes
+
+- name: Enable and start nginx service
+  ansible.builtin.systemd_service:
+    name: nginx
+    enabled: true
+    state: started
+    
