@@ -14,8 +14,9 @@
 
 - name: Create app directory
   ansible.builtin.file:
-    name: app
-
+    path: app
+    state: directory
+    
 - name: Unzip application under app folder
   ansible.builtin.unarchive:
     src: /tmp/{{ app_name }}.zip
