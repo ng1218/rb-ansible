@@ -10,7 +10,7 @@
 - name: Delete app folder if exists
   ansible.builtin.file:
     name: app
-    absent: true
+    state: absent
 
 - name: Create app directory
   ansible.builtin.file:
