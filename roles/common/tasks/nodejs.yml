@@ -15,3 +15,7 @@
   ansible.builtin.command:
     cmd: npm install -y
     chdir: /app
+
+- name: Invoke App pre setup role
+  ansible.builtin.include_task:
+    file: systemd_service.yml
