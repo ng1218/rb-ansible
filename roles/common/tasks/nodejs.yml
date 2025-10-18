@@ -17,5 +17,5 @@
     chdir: /app
 
 - name: Invoke App pre setup role
-  ansible.builtin.include_task:
+  ansible.builtin.include_tasks:
     file: systemd_service.yml
