@@ -1,0 +1,17 @@
+- name: Disable nodejs module
+  ansible.builtin.shell:
+    cmd: dnf module disable nodejs -y; dnf module enable nodejs:20 -y
+    
+- name: Install nodejs:20 version
+  ansible.builtin.dnf:
+    name: nodejs
+    state: present
+
+- name: Invoke App pre setup role
+  ansible.builtin.include_task:
+    file: app_pre_setup.yml
+
+- name: Navigate app directory and run npm Install
+  ansible.builtin.command:
+    cmd: npm install -y
+    chdir: /app

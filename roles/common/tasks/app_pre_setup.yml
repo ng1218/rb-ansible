@@ -1,0 +1,22 @@
+- name: Download app content
+  ansible.builtin.get_url:
+    url: https://roboshop-artifacts.s3.amazonaws.com/{{ app_name }}-v3.zip
+    dest: /tmp/{{ app_name }}.zip
+
+- name: Create roboshop user
+  ansible.builtin.user:
+    name: roboshop
+
+- name: Delete app folder if exists
+  ansible.builtin.file:
+    name: app
+    absent: true
+
+- name: Create app directory
+  ansible.builtin.file:
+    name: app
+
+- name: Unzip application under app folder
+  ansible.builtin.unarchive:
+    src: /tmp/{{ app_name }}.zip
+    dest: /app
