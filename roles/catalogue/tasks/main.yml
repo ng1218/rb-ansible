@@ -14,4 +14,4 @@
     state: present
 
 - name: Load Master Data
-  ansible.builtin.shell: mongosh --host 10.1.0.12 </app/db/master-data.js
+  ansible.builtin.shell: mongosh --host mongodb-dev.nareshdevops1218.online </app/db/master-data.js
