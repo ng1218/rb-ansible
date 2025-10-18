@@ -20,5 +20,5 @@
 - name: Unzip application under app folder
   ansible.builtin.unarchive:
     src: /tmp/{{ app_name }}.zip
-    dest: /app
+    dest: app
     remote_src: yes
