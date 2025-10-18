@@ -16,8 +16,9 @@
   ansible.builtin.file:
     path: app
     state: directory
-    
+
 - name: Unzip application under app folder
   ansible.builtin.unarchive:
     src: /tmp/{{ app_name }}.zip
     dest: /app
+    remote_src: yes
