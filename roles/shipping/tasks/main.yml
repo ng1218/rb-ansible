@@ -9,7 +9,7 @@
     state: present
 
 - name: Load database schemas
-  ansible.builtin.shell: mysql -h mysql-dev.nareshdevops1218.online -uroot -pRoboShop@1 < /app/db/{{ schema_name }}.sql
+  ansible.builtin.shell: mysql -h mysql-dev.nareshdevops1218.online -uroot -pRoboShop@1 < /app/db/{{ item }}.sql
   loop:
     - schema
     - app-user
