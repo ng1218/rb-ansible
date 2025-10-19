@@ -1,0 +1,17 @@
+- name: Install golang
+  ansible.builtin.dnf:
+    name: golang
+    state: present
+
+- name: Invoke App pre setup role
+  ansible.builtin.include_tasks:
+    file: app_pre_setup.yml
+
+- name: Navigate app directory and run npm Install
+  ansible.builtin.command:
+    cmd: go mod init dispatch; go get; go build
+    chdir: /app
+
+- name: Invoke App pre setup role
+  ansible.builtin.include_tasks:
+    file: systemd_service.yml

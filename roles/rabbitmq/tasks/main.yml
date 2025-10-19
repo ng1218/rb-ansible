@@ -1,0 +1,20 @@
+- name: Copy rabbitmq repo file
+  ansible.builtin.copy:
+    src: rabbitmq.repo
+    dest: /etc/yum.repos.d/rabbitmq.repo
+    
+- name: Install rabbitmq server version
+  ansible.builtin.dnf:
+    name: rabbitmq-server
+    state: present
+
+- name: Update default listening port
+  ansible.builtin.shell: |
+    rabbitmqctl add_user roboshop roboshop123
+    rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+
+- name: Enable and start app service
+  ansible.builtin.systemd_service:
+    name: redis
+    enabled: true
+    state: started

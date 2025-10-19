@@ -1,0 +1,17 @@
+- name: Invoke Maven role
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: maven.yml
+
+- name: Install MySQL
+  ansible.builtin.dnf:
+    name: mysql
+    state: present
+
+- name: Load database schemas
+  ansible.builtin.shell: "mysql -h mysql-dev.nareshdevops1218.online -uroot -pRoboShop@1 < /app/db/{{ schema_name }}"
+  loop:
+    - schema.sql
+    - app-user.sql
+    - master-data.sql
+    

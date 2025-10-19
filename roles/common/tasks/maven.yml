@@ -1,0 +1,23 @@
+- name: Install Maven
+  ansible.builtin.dnf:
+    name: maven
+    state: present
+
+- name: Invoke App pre setup role
+  ansible.builtin.include_tasks:
+    file: app_pre_setup.yml
+
+- name: Navigate app directory and run npm Install
+  ansible.builtin.command:
+    cmd: mvn clean package
+    chdir: /app
+
+- name: Copy compiled application.jar
+  ansible.builtin.copy:
+    src: /target/{{ app_name }}.jar
+    dest: /app/{{ app_name }}.jar
+    remote_src: yes
+
+- name: Invoke App pre setup role
+  ansible.builtin.include_tasks:
+    file: systemd_service.yml
