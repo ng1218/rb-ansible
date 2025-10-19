@@ -14,7 +14,7 @@
 
 - name: Copy compiled application.jar
   ansible.builtin.copy:
-    src: /target/{{ app_name }}.jar
+    src: /app/target/{{ app_name }}-1.0.jar
     dest: /app/{{ app_name }}.jar
     remote_src: yes
 
