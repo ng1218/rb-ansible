@@ -1,6 +1,9 @@
 - name: Install python3
   ansible.builtin.dnf:
-    name: python3 gcc python3-devel
+    name: 
+      - python3
+      - gcc
+      - python3-devel
     state: present
 
 - name: Invoke App pre setup role
