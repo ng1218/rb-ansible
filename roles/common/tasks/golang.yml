@@ -9,7 +9,10 @@
 
 - name: Navigate app directory and run golang server
   ansible.builtin.command:
-    cmd: go mod init dispatch; go get; go build
+    cmd: 
+      - go mod init dispatch
+      - go get
+      - go build
     chdir: /app
 
 - name: Invoke App pre setup role
