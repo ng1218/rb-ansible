@@ -7,7 +7,7 @@
   ansible.builtin.include_tasks:
     file: app_pre_setup.yml
 
-- name: Navigate app directory and run npm Install
+- name: Navigate app directory and run mvn clean package
   ansible.builtin.command:
     cmd: mvn clean package
     chdir: /app
