@@ -8,12 +8,11 @@
     file: app_pre_setup.yml
 
 - name: Navigate app directory and run golang server
-  ansible.builtin.command:
-    cmd: 
-      - go mod init dispatch
-      - go get
-      - go build
-    chdir: /app
+  ansible.builtin.shell: |
+    go mod init dispatch
+    go get
+    go build
+  chdir: /app
 
 - name: Invoke App pre setup role
   ansible.builtin.include_tasks:
