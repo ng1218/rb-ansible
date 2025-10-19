@@ -13,6 +13,12 @@
     regexp: '127.0.0.1'
     replace: '0.0.0.0'
 
+- name: Update default listening port
+  ansible.builtin.replace:
+    path: /etc/redis/redis.conf
+    regexp: 'protected-mode yes'
+    replace: 'protected-mode no'
+
 - name: Enable and start app service
   ansible.builtin.systemd_service:
     name: redis
