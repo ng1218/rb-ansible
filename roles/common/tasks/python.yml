@@ -10,7 +10,7 @@
   ansible.builtin.include_tasks:
     file: app_pre_setup.yml
 
-- name: Navigate app directory and run npm Install
+- name: Navigate app directory and run pip3 install
   ansible.builtin.command:
     cmd: pip3 install -r requirements.txt
     chdir: /app

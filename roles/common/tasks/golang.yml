@@ -7,7 +7,7 @@
   ansible.builtin.include_tasks:
     file: app_pre_setup.yml
 
-- name: Navigate app directory and run npm Install
+- name: Navigate app directory and run golang server
   ansible.builtin.command:
     cmd: go mod init dispatch; go get; go build
     chdir: /app
