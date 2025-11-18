@@ -14,4 +14,4 @@
     state: present
 
 - name: Load Master Data
-  ansible.builtin.shell: mongosh --host mongodb-dev.nareshdevops1218.online </app/db/master-data.js
+  ansible.builtin.shell: mongosh --host "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}}/data/catalogue:MONGO_HOST token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}" </app/db/master-data.js

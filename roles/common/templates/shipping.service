@@ -1,0 +1,12 @@
+[Unit]
+Description=Shipping Service
+
+[Service]
+User="{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/cart:USER token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
+Environment=CART_ENDPOINT="{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/shipping:CART_ENDPOINT token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
+Environment=DB_HOST="{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/shipping:DB_HOST token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
+ExecStart=/bin/java -jar /app/shipping.jar
+SyslogIdentifier=shipping
+
+[Install]
+WantedBy=multi-user.target

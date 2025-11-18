@@ -16,5 +16,5 @@
 
 - name: Add user roboshop and set permissions
   ansible.builtin.shell: |
-    rabbitmqctl add_user roboshop roboshop123
+    rabbitmqctl add_user "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}}/data/rabbitmq:USER_NAME token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}" "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}}/data/rabbitmq:PASSWORD token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}"
     rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
