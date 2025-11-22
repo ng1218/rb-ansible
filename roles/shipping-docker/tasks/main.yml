@@ -1,0 +1,29 @@
+- name: Install docker by invoking docker task
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: docker.yml
+
+- name: Create a shipping container
+  community.docker.docker_container:
+    name: cart
+    image: public.ecr.aws/w8x4g9h7/roboshop-v3/shipping
+    env:
+      CART_ENDPOINT: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/shipping:CART_ENDPOINT token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
+      DB_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/shipping:DB_HOST token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
+      REDIS_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/shipping:REDIS_HOST token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
+
+- name: Create a app user, schema and master-data container
+  loop:
+    app-user
+    schema
+    master-data
+  community.docker.docker_container:
+    name: { { item } }
+    image: public.ecr.aws/w8x4g9h7/roboshop-v3/schema-load
+    env:
+      DB_TYPE: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/shipping:DB_TYPE token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
+      APP_GIT_URL: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/shipping:APP_GIT_URL token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
+      DB_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/shipping:DB_HOST token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
+      DB_USER: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/shipping:DB_USER token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
+      DB_PASS: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/shipping:DB_PASS token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
+      SCHEMA_FILE: "db/${{item}}.sql"

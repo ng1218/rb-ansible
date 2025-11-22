@@ -1,0 +1,13 @@
+- name: Install docker by invoking docker task
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: docker.yml
+
+- name: Create a cart container
+  community.docker.docker_container:
+    name: cart
+    image: public.ecr.aws/w8x4g9h7/roboshop-v3/user
+    env:
+      MONGO: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/user:MONGO token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
+      MONGO_URL: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/user:MONGO_URL token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
+      REDIS_URL: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}/data/user:REDIS_URL token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}";
