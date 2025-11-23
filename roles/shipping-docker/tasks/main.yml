@@ -19,7 +19,7 @@
       app-user
       schema
       master-data
-    name: "{{item}}"
+    name: shipping-{{ item }}
     image: public.ecr.aws/w8x4g9h7/roboshop-v3/schema-load
     env:
       DB_TYPE: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}}/data/shipping:DB_TYPE token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}"
@@ -27,4 +27,4 @@
       DB_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}}/data/shipping:DB_HOST token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}"
       DB_USER: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}}/data/shipping:DB_USER token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}"
       DB_PASS: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}}/data/shipping:DB_PASS token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}"
-      SCHEMA_FILE: "db/${{item}}.sql"
+      SCHEMA_FILE: db/${{ item }}.sql
