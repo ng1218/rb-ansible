@@ -7,10 +7,11 @@
   community.docker.docker_container:
     name: cart
     image: public.ecr.aws/w8x4g9h7/roboshop-v3/shipping
+    port:
+      "8080:8080"
     env:
       CART_ENDPOINT: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}}/data/shipping:CART_ENDPOINT token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}"
       DB_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}}/data/shipping:DB_HOST token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}"
-      REDIS_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}}/data/shipping:REDIS_HOST token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}"
 
 - name: Create a app user, schema and master-data container
   loop:
