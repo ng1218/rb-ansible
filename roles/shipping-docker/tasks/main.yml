@@ -7,7 +7,7 @@
   community.docker.docker_container:
     name: cart
     image: public.ecr.aws/w8x4g9h7/roboshop-v3/shipping
-    port:
+    ports:
       "8080:8080"
     env:
       CART_ENDPOINT: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}}/data/shipping:CART_ENDPOINT token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}"
