@@ -15,7 +15,7 @@
 
 - name: Create a catalogue master-data container
   community.docker.docker_container:
-    name: master data
+    name: masterdata
     image: public.ecr.aws/w8x4g9h7/roboshop-v3/schema-load
     env:
       DB_TYPE: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{env}}/data/catalogue:DB_TYPE token={{ token }} url=http://vault.nareshdevops1218.online:8200') }}"
